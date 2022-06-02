@@ -23,6 +23,7 @@ class _AppWidgetState extends State<AppWidget> {
         cardColor: const Color(0xffffffff),
         colorScheme: const ColorScheme.light().copyWith(
           primary: const Color(0xfffe5e50),
+          secondary: const Color(0xffffffff),
         ),
         textTheme: TextTheme(
           bodyLarge: const TextStyle(

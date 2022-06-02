@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fteam_desafio_1/src/adoption/presenter/pages/widgets/appbar/appbar_widget.dart';
+import 'package:fteam_desafio_1/src/adoption/presenter/pages/widgets/cards/card_adoption_widget.dart';
+import 'package:fteam_desafio_1/src/adoption/presenter/pages/widgets/cards/card_category_widget.dart';
 
 class AdoptionPage extends StatefulWidget {
   const AdoptionPage({Key? key}) : super(key: key);
@@ -7,56 +10,30 @@ class AdoptionPage extends StatefulWidget {
   State<AdoptionPage> createState() => _AdoptionPageState();
 }
 
+class CategorySelect extends ValueNotifier<int> {
+  CategorySelect(super.value);
+}
+
 class _AdoptionPageState extends State<AdoptionPage> {
+  final categorySelect = CategorySelect(-1);
+
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        actions: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(
-                  Icons.menu,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Location',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    Text(
-                      'Coruscant, Galaxy',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
-                ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.network(
-                    'https://lumiere-a.akamaihd.net/v1/images/626fd61e9b37110001dafe6c-image_65f027b6.jpeg?region=0,0,1536,864',
-                    fit: BoxFit.cover,
-                    height: 50,
-                    width: 50,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+      appBar: AppBarWidget(
+        height: size.height * 0.1,
+        width: size.width,
+        leadingIcon: Icons.menu,
+        urlImage:
+            'https://lumiere-a.akamaihd.net/v1/images/626fd61e9b37110001dafe6c-image_65f027b6.jpeg?region=0,0,1536,864',
+        title: 'Location',
+        subtitle: 'Coruscant, Galaxy',
       ),
       body: Container(
-        margin: const EdgeInsets.only(top: 20),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        width: size.width,
+        height: size.height * 0.9,
         decoration: BoxDecoration(
           color: Theme.of(context).highlightColor,
           borderRadius: const BorderRadius.only(
@@ -74,29 +51,34 @@ class _AdoptionPageState extends State<AdoptionPage> {
                   top: constraints.maxHeight * 0.05,
                   bottom: constraints.maxHeight * 0.05,
                 ),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (ctx, index) {
-                    return Container(
-                      height: 50,
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      margin: const EdgeInsets.only(right: 15),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(22),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: (constraints.maxWidth * 0.225) - 25,
+                      child: CardCategoryWidget(
+                        icon: Icons.filter_list,
+                        onTap: () {},
                       ),
-                      child: index == 0
-                          ? const Icon(Icons.filter_list)
-                          : Row(
-                              children: const [
-                                Icon(Icons.star),
-                                SizedBox(width: 5),
-                                Text('Jedi'),
-                              ],
-                            ),
-                    );
-                  },
+                    ),
+                    SizedBox(
+                      width: constraints.maxWidth * 0.775,
+                      child: ValueListenableBuilder(
+                        valueListenable: categorySelect,
+                        builder: (ctx, value, wdg) => ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 10,
+                          itemBuilder: (ctx, index) {
+                            return CardCategoryWidget(
+                              icon: Icons.star,
+                              title: 'Jedi',
+                              onTap: () => categorySelect.value = index,
+                              isSelected: categorySelect.value == index,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Container(
@@ -105,73 +87,15 @@ class _AdoptionPageState extends State<AdoptionPage> {
                 child: ListView.builder(
                   itemCount: 10,
                   itemBuilder: (ctx, index) {
-                    return Container(
-                      height: constraints.maxHeight * 0.2,
-                      margin: const EdgeInsets.only(bottom: 25),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Theme.of(context).cardColor,
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.network(
-                                'https://lumiere-a.akamaihd.net/v1/images/626fd61e9b37110001dafe6c-image_65f027b6.jpeg?region=0,0,1536,864',
-                                fit: BoxFit.cover,
-                                height: constraints.maxHeight * 0.2,
-                                width: constraints.maxHeight * 0.2,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Mestre Yoda',
-                                        style: Theme.of(context).textTheme.bodyLarge,
-                                      ),
-                                      const Icon(Icons.star_border),
-                                    ],
-                                  ),
-                                  Text(
-                                    'Classe Jedi',
-                                    style: Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    'Extraterrestre, +d800 anos',
-                                    style: Theme.of(context).textTheme.bodySmall,
-                                  ),
-                                  const Spacer(),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_on_sharp,
-                                        size: 20,
-                                        color: Theme.of(context).colorScheme.primary,
-                                      ),
-                                      const SizedBox(width: 2.5),
-                                      Text(
-                                        '10 mil anos luz',
-                                        style: Theme.of(context).textTheme.bodySmall,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                    return CardAdoptionWidget(
+                      onTap: () {},
+                      height: constraints.maxHeight,
+                      urlImage:
+                          'https://lumiere-a.akamaihd.net/v1/images/626fd61e9b37110001dafe6c-image_65f027b6.jpeg?region=0,0,1536,864',
+                      title: 'Mestre Yoda',
+                      subtitle: 'Classe Jedi',
+                      description: 'Extraterrestre, +d800 anos',
+                      location: '10 mil anos luz',
                     );
                   },
                 ),
