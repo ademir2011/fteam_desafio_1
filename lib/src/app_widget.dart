@@ -26,6 +26,11 @@ class _AppWidgetState extends State<AppWidget> {
           secondary: const Color(0xffffffff),
         ),
         textTheme: TextTheme(
+          displayMedium: const TextStyle(
+            fontWeight: FontWeight.w800,
+            fontSize: 25,
+            color: Color(0xff383d41),
+          ),
           bodyLarge: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,

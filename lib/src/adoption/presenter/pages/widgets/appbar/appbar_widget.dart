@@ -7,6 +7,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String urlImage;
   final String title;
   final String subtitle;
+  final void Function()? onPressedLeading;
+  final void Function()? onTapTrailing;
 
   const AppBarWidget({
     Key? key,
@@ -16,6 +18,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     this.leadingIcon,
     this.title = '',
     this.subtitle = '',
+    this.onTapTrailing,
+    this.onPressedLeading,
   }) : super(key: key);
 
   @override
@@ -30,9 +34,10 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(
-                leadingIcon,
-                color: Theme.of(context).iconTheme.color,
+              IconButton(
+                constraints: const BoxConstraints(),
+                onPressed: onPressedLeading,
+                icon: Icon(leadingIcon, color: Theme.of(context).iconTheme.color),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -48,7 +53,20 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                 ],
               ),
               urlImage.isEmpty
-                  ? Container()
+                  ? InkWell(
+                      onTap: onTapTrailing,
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary.withOpacity(.25),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Icon(
+                          Icons.heart_broken,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    )
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(50),
                       child: Image.network(

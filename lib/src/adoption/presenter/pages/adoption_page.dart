@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fteam_desafio_1/src/adoption/presenter/pages/widgets/appbar/appbar_widget.dart';
 import 'package:fteam_desafio_1/src/adoption/presenter/pages/widgets/cards/card_adoption_widget.dart';
 import 'package:fteam_desafio_1/src/adoption/presenter/pages/widgets/cards/card_category_widget.dart';
@@ -88,7 +89,7 @@ class _AdoptionPageState extends State<AdoptionPage> {
                   itemCount: 10,
                   itemBuilder: (ctx, index) {
                     return CardAdoptionWidget(
-                      onTap: () {},
+                      onTap: () => Modular.to.pushNamed('/detail'),
                       height: constraints.maxHeight,
                       urlImage:
                           'https://lumiere-a.akamaihd.net/v1/images/626fd61e9b37110001dafe6c-image_65f027b6.jpeg?region=0,0,1536,864',
