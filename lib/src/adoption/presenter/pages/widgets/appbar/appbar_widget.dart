@@ -36,6 +36,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
             children: [
               IconButton(
                 constraints: const BoxConstraints(),
+                padding: EdgeInsets.zero,
                 onPressed: onPressedLeading,
                 icon: Icon(leadingIcon, color: Theme.of(context).iconTheme.color),
               ),

@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:fteam_desafio_1/src/adoption/domain/entities/adoption_entity.dart';
+import 'package:fteam_desafio_1/src/adoption/domain/entities/person_entity.dart';
 import 'package:fteam_desafio_1/src/adoption/presenter/pages/widgets/appbar/appbar_widget.dart';
 
 class AdoptionDetailPage extends StatefulWidget {
-  const AdoptionDetailPage({Key? key}) : super(key: key);
+  final AdoptionEntity adoptionEntity;
+
+  const AdoptionDetailPage({
+    Key? key,
+    required this.adoptionEntity,
+  }) : super(key: key);
 
   @override
   State<AdoptionDetailPage> createState() => _AdoptionDetailPageState();
 }
 
 class _AdoptionDetailPageState extends State<AdoptionDetailPage> {
+  final person = Modular.get<PersonEntity>();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -32,7 +40,7 @@ class _AdoptionDetailPageState extends State<AdoptionDetailPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Sparky',
+                        widget.adoptionEntity.title,
                         style: Theme.of(context).textTheme.displayMedium,
                       ),
                       Icon(
@@ -47,11 +55,11 @@ class _AdoptionDetailPageState extends State<AdoptionDetailPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Golden Retriever',
+                        widget.adoptionEntity.subtitle,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(
-                        '8 months old',
+                        widget.adoptionEntity.description,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
@@ -65,7 +73,7 @@ class _AdoptionDetailPageState extends State<AdoptionDetailPage> {
                       ),
                       const SizedBox(width: 5),
                       Text(
-                        '2.5 kms away',
+                        widget.adoptionEntity.distance,
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
@@ -82,7 +90,7 @@ class _AdoptionDetailPageState extends State<AdoptionDetailPage> {
                             child: Stack(
                               children: [
                                 ListView.builder(
-                                  itemCount: 10,
+                                  itemCount: widget.adoptionEntity.urlImages.length,
                                   itemBuilder: (context, index) {
                                     return Align(
                                       child: Container(
@@ -99,7 +107,7 @@ class _AdoptionDetailPageState extends State<AdoptionDetailPage> {
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.circular(15),
                                           child: Image.network(
-                                            'https://lumiere-a.akamaihd.net/v1/images/626fd61e9b37110001dafe6c-image_65f027b6.jpeg?region=0,0,1536,864',
+                                            widget.adoptionEntity.urlImages[index],
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -127,12 +135,15 @@ class _AdoptionDetailPageState extends State<AdoptionDetailPage> {
                             ),
                           ),
                           SizedBox(width: constraints.maxWidth * 0.05),
-                          Container(
+                          SizedBox(
                             width: constraints.maxWidth * 0.75,
                             height: constraints.maxHeight,
-                            child: Image.network(
-                              'https://lumiere-a.akamaihd.net/v1/images/626fd61e9b37110001dafe6c-image_65f027b6.jpeg?region=0,0,1536,864',
-                              fit: BoxFit.cover,
+                            child: Hero(
+                              tag: widget.adoptionEntity.id,
+                              child: Image.network(
+                                widget.adoptionEntity.urlImages.first,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ],
@@ -146,7 +157,7 @@ class _AdoptionDetailPageState extends State<AdoptionDetailPage> {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    'Lorem ipsum lor em ips sun lorem' * 20,
+                    widget.adoptionEntity.about,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   SizedBox(height: size.height * 0.15),

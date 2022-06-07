@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:fteam_desafio_1/src/adoption/domain/entities/adoption_entity.dart';
+import 'package:fteam_desafio_1/src/adoption/domain/entities/category_entity.dart';
+import 'package:fteam_desafio_1/src/adoption/domain/entities/person_entity.dart';
 import 'package:fteam_desafio_1/src/adoption/presenter/pages/widgets/appbar/appbar_widget.dart';
 import 'package:fteam_desafio_1/src/adoption/presenter/pages/widgets/cards/card_adoption_widget.dart';
 import 'package:fteam_desafio_1/src/adoption/presenter/pages/widgets/cards/card_category_widget.dart';
@@ -18,6 +21,10 @@ class CategorySelect extends ValueNotifier<int> {
 class _AdoptionPageState extends State<AdoptionPage> {
   final categorySelect = CategorySelect(-1);
 
+  final person = Modular.get<PersonEntity>();
+  final adoptions = Modular.get<List<AdoptionEntity>>();
+  final categories = Modular.get<List<CategoryEntity>>();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -27,10 +34,9 @@ class _AdoptionPageState extends State<AdoptionPage> {
         height: size.height * 0.1,
         width: size.width,
         leadingIcon: Icons.menu,
-        urlImage:
-            'https://lumiere-a.akamaihd.net/v1/images/626fd61e9b37110001dafe6c-image_65f027b6.jpeg?region=0,0,1536,864',
+        urlImage: person.urlImage,
         title: 'Location',
-        subtitle: 'Coruscant, Galaxy',
+        subtitle: person.location,
       ),
       body: Container(
         width: size.width,
@@ -67,11 +73,11 @@ class _AdoptionPageState extends State<AdoptionPage> {
                         valueListenable: categorySelect,
                         builder: (ctx, value, wdg) => ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: 10,
+                          itemCount: categories.length,
                           itemBuilder: (ctx, index) {
                             return CardCategoryWidget(
                               icon: Icons.star,
-                              title: 'Jedi',
+                              title: categories[index].name,
                               onTap: () => categorySelect.value = index,
                               isSelected: categorySelect.value == index,
                             );
@@ -86,17 +92,17 @@ class _AdoptionPageState extends State<AdoptionPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 height: constraints.maxHeight * 0.8,
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: adoptions.length,
                   itemBuilder: (ctx, index) {
                     return CardAdoptionWidget(
-                      onTap: () => Modular.to.pushNamed('/detail'),
+                      tag: adoptions[index].id.toString(),
+                      onTap: () => Modular.to.pushNamed('/detail', arguments: adoptions[index]),
                       height: constraints.maxHeight,
-                      urlImage:
-                          'https://lumiere-a.akamaihd.net/v1/images/626fd61e9b37110001dafe6c-image_65f027b6.jpeg?region=0,0,1536,864',
-                      title: 'Mestre Yoda',
-                      subtitle: 'Classe Jedi',
-                      description: 'Extraterrestre, +d800 anos',
-                      location: '10 mil anos luz',
+                      urlImages: adoptions[index].urlImages,
+                      title: adoptions[index].title,
+                      subtitle: adoptions[index].subtitle,
+                      description: adoptions[index].description,
+                      location: adoptions[index].distance,
                     );
                   },
                 ),

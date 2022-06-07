@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CardAdoptionWidget extends StatelessWidget {
+  final String tag;
   final double height;
-  final String urlImage;
+  final List<String> urlImages;
   final String title;
   final String subtitle;
   final String description;
@@ -11,8 +12,9 @@ class CardAdoptionWidget extends StatelessWidget {
 
   const CardAdoptionWidget({
     Key? key,
+    required this.tag,
     required this.height,
-    required this.urlImage,
+    required this.urlImages,
     required this.onTap,
     this.title = '',
     this.subtitle = '',
@@ -37,11 +39,14 @@ class CardAdoptionWidget extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  urlImage,
-                  fit: BoxFit.cover,
-                  height: height * 0.2,
-                  width: height * 0.2,
+                child: Hero(
+                  tag: tag,
+                  child: Image.network(
+                    urlImages.first,
+                    fit: BoxFit.cover,
+                    height: height * 0.2,
+                    width: height * 0.2,
+                  ),
                 ),
               ),
             ),
