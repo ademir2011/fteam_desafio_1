@@ -94,15 +94,17 @@ class _AdoptionPageState extends State<AdoptionPage> {
                 child: ListView.builder(
                   itemCount: adoptions.length,
                   itemBuilder: (ctx, index) {
+                    final adoption = adoptions[index];
+
                     return CardAdoptionWidget(
-                      tag: adoptions[index].id.toString(),
-                      onTap: () => Modular.to.pushNamed('/detail', arguments: adoptions[index]),
+                      tag: adoption.id.toString(),
+                      onTap: () => Modular.to.pushNamed('/detail', arguments: adoption),
                       height: constraints.maxHeight,
-                      urlImages: adoptions[index].urlImages,
-                      title: adoptions[index].title,
-                      subtitle: adoptions[index].subtitle,
-                      description: adoptions[index].description,
-                      location: adoptions[index].distance,
+                      urlImages: adoption.urlImages,
+                      title: adoption.title,
+                      subtitle: adoption.subtitle,
+                      description: adoption.description,
+                      location: adoption.distance,
                     );
                   },
                 ),

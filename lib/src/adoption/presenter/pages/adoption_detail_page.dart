@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fteam_desafio_1/src/adoption/domain/entities/adoption_entity.dart';
 import 'package:fteam_desafio_1/src/adoption/domain/entities/person_entity.dart';
 import 'package:fteam_desafio_1/src/adoption/presenter/pages/widgets/appbar/appbar_widget.dart';
+import 'package:fteam_desafio_1/src/adoption/presenter/pages/widgets/images/custom_image_widget.dart';
 
 class AdoptionDetailPage extends StatefulWidget {
   final AdoptionEntity adoptionEntity;
@@ -92,24 +93,21 @@ class _AdoptionDetailPageState extends State<AdoptionDetailPage> {
                                 ListView.builder(
                                   itemCount: widget.adoptionEntity.urlImages.length,
                                   itemBuilder: (context, index) {
-                                    return Align(
-                                      child: Container(
-                                        height: constraints.maxWidth * 0.2,
-                                        width: constraints.maxWidth * 0.2,
-                                        margin: const EdgeInsets.only(bottom: 15),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                          border: Border.all(
-                                            width: 2.5,
-                                            color: Theme.of(context).highlightColor,
-                                          ),
+                                    return Container(
+                                      height: constraints.maxWidth * 0.2,
+                                      width: constraints.maxWidth * 0.2,
+                                      margin: const EdgeInsets.only(bottom: 15),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(
+                                          width: 2.5,
+                                          color: Theme.of(context).highlightColor,
                                         ),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(15),
-                                          child: Image.network(
-                                            widget.adoptionEntity.urlImages[index],
-                                            fit: BoxFit.cover,
-                                          ),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: CustomImageWidget(
+                                          urlImage: widget.adoptionEntity.urlImages[index],
                                         ),
                                       ),
                                     );
@@ -140,9 +138,8 @@ class _AdoptionDetailPageState extends State<AdoptionDetailPage> {
                             height: constraints.maxHeight,
                             child: Hero(
                               tag: widget.adoptionEntity.id,
-                              child: Image.network(
-                                widget.adoptionEntity.urlImages.first,
-                                fit: BoxFit.cover,
+                              child: CustomImageWidget(
+                                urlImage: widget.adoptionEntity.urlImages.first,
                               ),
                             ),
                           ),

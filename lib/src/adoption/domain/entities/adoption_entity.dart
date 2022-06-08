@@ -9,7 +9,7 @@ class AdoptionEntity {
   final List<String> urlImages;
   final String about;
 
-  AdoptionEntity({
+  const AdoptionEntity({
     required this.id,
     required this.categoryId,
     required this.title,

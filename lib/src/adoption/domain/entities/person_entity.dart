@@ -1,7 +1,7 @@
 class PersonEntity {
   final String urlImage;
   final String location;
-  PersonEntity({
+  const PersonEntity({
     required this.urlImage,
     required this.location,
   });

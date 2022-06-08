@@ -7,20 +7,20 @@ import 'package:fteam_desafio_1/src/adoption/presenter/pages/adoption_page.dart'
 
 class AdoptionModule extends Module {
   final categories = [
-    CategoryEntity(id: '1', name: 'Grâo-Mestre Jedi', urlImageIcon: ''),
-    CategoryEntity(id: '2', name: 'Mestre Jedi', urlImageIcon: ''),
-    CategoryEntity(id: '3', name: 'Cavaleiro Jedi', urlImageIcon: ''),
-    CategoryEntity(id: '4', name: 'Padawan', urlImageIcon: ''),
-    CategoryEntity(id: '5', name: 'Youngling', urlImageIcon: ''),
+    const CategoryEntity(id: '1', name: 'Grâo-Mestre Jedi', urlImageIcon: ''),
+    const CategoryEntity(id: '2', name: 'Mestre Jedi', urlImageIcon: ''),
+    const CategoryEntity(id: '3', name: 'Cavaleiro Jedi', urlImageIcon: ''),
+    const CategoryEntity(id: '4', name: 'Padawan', urlImageIcon: ''),
+    const CategoryEntity(id: '5', name: 'Youngling', urlImageIcon: ''),
   ];
 
-  final person = PersonEntity(
+  final person = const PersonEntity(
     urlImage: 'https://img.elo7.com.br/product/original/2CD8E1D/darth-vader-lapisepapel.jpg',
     location: 'Mustafar, Galaxy',
   );
 
   final adoptions = [
-    AdoptionEntity(
+    const AdoptionEntity(
       id: '1',
       categoryId: '1',
       title: 'Yoda',
@@ -37,7 +37,7 @@ class AdoptionModule extends Module {
       about:
           'Yoda was a legendary Jedi Master and stronger than most in his connection with the Force. Small in size but wise and powerful, he trained Jedi for over 800 years, playing integral roles in the Clone Wars, the instruction of Luke Skywalker, and unlocking the path to immortality.',
     ),
-    AdoptionEntity(
+    const AdoptionEntity(
       id: '2',
       categoryId: '2',
       title: 'Grogu',

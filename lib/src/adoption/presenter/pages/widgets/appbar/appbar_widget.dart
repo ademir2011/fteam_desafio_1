@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../images/custom_image_widget.dart';
+
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final double width;
   final double height;
-  final IconData? leadingIcon;
+  final IconData leadingIcon;
   final String urlImage;
   final String title;
   final String subtitle;
@@ -14,8 +16,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     Key? key,
     required this.height,
     required this.width,
+    required this.leadingIcon,
     this.urlImage = '',
-    this.leadingIcon,
     this.title = '',
     this.subtitle = '',
     this.onTapTrailing,
@@ -70,9 +72,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                     )
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(50),
-                      child: Image.network(
-                        urlImage,
-                        fit: BoxFit.cover,
+                      child: CustomImageWidget(
+                        urlImage: urlImage,
                         height: 50,
                         width: 50,
                       ),
@@ -85,6 +86,5 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size(width, height);
 }

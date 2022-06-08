@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fteam_desafio_1/src/adoption/presenter/pages/widgets/images/custom_image_widget.dart';
 
 class CardAdoptionWidget extends StatelessWidget {
   final String tag;
@@ -16,10 +17,10 @@ class CardAdoptionWidget extends StatelessWidget {
     required this.height,
     required this.urlImages,
     required this.onTap,
-    this.title = '',
-    this.subtitle = '',
-    this.description = '',
-    this.location = '',
+    required this.title,
+    required this.subtitle,
+    required this.description,
+    required this.location,
   }) : super(key: key);
 
   @override
@@ -41,9 +42,8 @@ class CardAdoptionWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: Hero(
                   tag: tag,
-                  child: Image.network(
-                    urlImages.first,
-                    fit: BoxFit.cover,
+                  child: CustomImageWidget(
+                    urlImage: urlImages.first,
                     height: height * 0.2,
                     width: height * 0.2,
                   ),
